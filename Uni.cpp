@@ -91,18 +91,20 @@ public:
   {
     system("cls");
     std::ifstream file_xP("db/User.txt");
-    std::string lineO;
-    while (std::getline(file_xP, lineO))
+    std::string lineOL;
+    while (std::getline(file_xP, lineOL))
     {
-      if (lineO.substr(0, 8) == user)
+      if (lineOL.substr(0, 8) == user)
       {
         std::cout << user << std::endl;
-        std::cout << lineO.substr(20) << std::endl;
+        std::cout << lineOL.substr(20) << std::endl;
       }
     }
     std::ifstream file_x("db/Lessons.txt");
     std::string line;
     int i = 1;
+    bool avg=true;
+    double sum=0;
     while (std::getline(file_x, line))
     {
       int P = line.find(":");
@@ -115,10 +117,36 @@ public:
         if (X == user)
         {
           string XL = lineX.substr(9);
-          std::cout << i << "." << K << " " << XL << std::endl;
+          std::cout << i << "." << K << " " << XL;
+          if (XL.substr(0,2)=="--")
+          {
+            avg=false;
+          }
+          if (avg)
+          {
+           sum+=stod(XL);
+          }
+          
+          
+          if (XL.substr(0,2)=="--")
+       {
+        cout << " Not grade for " <<"this"<<" lesson"<< std::endl;
+       }else if (stoi(XL)>=10)
+       {
+        cout << " Accepted in this lesson"<< std::endl;
+       }else{
+        cout << " Not Accepted in this lesson"<< std::endl;
+       }
           i++;
         }
       }
+    }
+    
+    if(avg){
+      double avarage=sum/(i-1);
+      std::cout << "average : " <<avarage<< std::endl;
+    }else{
+      std::cout << "average : " <<"--"<< std::endl;
     }
     getch();
     system("cls");
